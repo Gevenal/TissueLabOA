@@ -21,7 +21,7 @@
 ## 🧪 Demo
 
 📹 **Video walkthrough** (includes code explanation and feature demo):  
-👉 [Google Drive Link]([https://your-google-drive-link.com](https://drive.google.com/file/d/1D-bqV9HTePo1dvbdafP2StwbQvmTl5Kh/view?usp=sharing)) 
+👉 [Google Drive Link](https://drive.google.com/file/d/1D-bqV9HTePo1dvbdafP2StwbQvmTl5Kh/view?usp=sharing) 
 
 ---
 
