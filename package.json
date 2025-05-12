@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "electron": "^31.4.0"
+  },
+  "dependencies": {
+    "@types/openseadragon": "^3.0.10"
+  }
+}

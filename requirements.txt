@@ -1,0 +1,7 @@
+flask
+flask-cors
+tiffslide
+openslide-python
+numpy
+scikit-image
+opencv-python

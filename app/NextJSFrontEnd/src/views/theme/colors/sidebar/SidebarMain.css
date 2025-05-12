@@ -1,0 +1,79 @@
+.widget {
+  background-color: #fff;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.widget .card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  font-weight: bold;
+  font-size: 18px; /* Larger font size */
+  margin: 0; /* Removes default margin from h1 */
+  padding: 0.5rem 0; /* Remove horizontal padding, adjust vertical padding */
+}
+
+.sidebar-icon-button {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+}
+
+.sidebar-icon-button .icon {
+  font-size: 20px;
+  margin-bottom: 0px;
+}
+
+.sidebar-icon-button .text {
+  font-size: 12px;
+}
+
+
+.image-viewer-sidebar {
+  width: 300px;  /* Adjust width as needed */
+  align-self: flex-start;  /* Aligns the sidebar to the top */
+  padding: 15px;
+  font-size: 14px; /* Smaller font size */
+}
+
+.image-viewer-sidebar .form-label {
+  font-weight: bold;
+  font-size: 14px; /* Smaller font size */
+}
+
+.image-viewer-sidebar .form-select,
+.image-viewer-sidebar .form-textarea {
+  margin-bottom: 15px;
+  font-size: 14px; /* Smaller font size */
+}
+
+.image-viewer-sidebar .btn {
+  margin-right: 10px;
+  font-size: 14px; /* Smaller font size */
+}
+
+.image-viewer-sidebar .btn:last-child {
+  margin-right: 0;
+}
+
+.image-viewer-sidebar .badge {
+  margin-left: 5px;
+  font-size: 14px; /* Smaller font size */
+}
+
+@media (max-width: 768px) {
+  .image-viewer-container {
+      flex-direction: column;
+  }
+
+  .image-viewer-sidebar {
+      width: 100%;
+      margin-top: 20px;
+  }
+}

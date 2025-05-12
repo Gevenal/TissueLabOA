@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!--meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: http://127.0.0.1:5000; font-src 'self';"
+    /-->
+    <title>TissueLab</title>
+    <link rel="stylesheet" href="guiExample.css" />
+  </head>
+
+  <body>
+
+    <h1>This is H1</h1>
+    <div>
+      <div id="openseadragon1" style="width: 100%; height: 800px; border: 0.5px solid #5c5c5c69;"></div>
+    </div>
+    
+    <div class="container">
+
+      <button id="start_code">Launch program</button>
+      <input
+        id="string_to_send"
+        type="text"
+        placeholder="Enter the string to send to program"
+      />
+      <button id="send_code">Interact with program</button>
+      <button id="stop_code">Terminate program</button>
+      <hr>
+      <button id="open_file_sync">Open a file sync</button>
+      <button id="open_file_async">Open a file async</button>
+      <p><a href="https://github.com/keybraker">Made by Keybraker</a></p>
+    </div>
+  </body>
+</html>
+
+
+<script src="..\node_modules\openseadragon\build\openseadragon\openseadragon.min.js"></script>
+<script type="text/javascript">
+
+
+    var maxLevel = 8;
+    var svs_width = 137448;
+    var svs_height = 76587;
+    var tile_size = 512;
+    
+    setTimeout(function() { // Use setTimeout to wait for the flask server to start.
+      load_OpenSeadragon(svs_width, svs_height, tile_size, maxLevel);
+    }, 2000);
+</script>
+
+
+
+<script type="text/javascript">
+
+    function CustomTileSource(width, height, tileSize, tileOverlap, minLevel, maxLevel, baseURL) {
+        OpenSeadragon.TileSource.call(this, {
+            width: width,
+            height: height,
+            tileSize: tileSize,
+            tileOverlap: tileOverlap,
+            minLevel: minLevel,
+            maxLevel: maxLevel,
+        });
+        this.baseURL = baseURL;
+    }
+
+    CustomTileSource.prototype = Object.create(OpenSeadragon.TileSource.prototype);
+    CustomTileSource.prototype.getTileUrl = function(level, x, y) {
+        return `${this.baseURL}/${level}/${x}_${y}.jpeg`;
+    };
+
+
+
+    function load_OpenSeadragon(svs_width, svs_height, tile_size, maxLevel){
+      const viewer = OpenSeadragon({
+          id: "openseadragon1",
+          showNavigator: true,
+          wrapHorizontal: false,
+          prefixUrl: "../node_modules/openseadragon/build/openseadragon/images/",
+          
+          tileSources: new CustomTileSource(
+              /* width */ svs_width / 2**(6-maxLevel),
+              /* height */ svs_height / 2**(6-maxLevel),
+              /* tileSize */ tile_size,
+              /* tileOverlap */ 0,
+              /* minLevel */ 0,
+              /* maxLevel */ maxLevel,
+              /* baseURL */ "http://127.0.0.1:5000/slide"
+          ),
+          /*
+          Level 3: Each tile covers a 512×512 pixel area of the original image.
+          Level 2: Each tile covers a 1024×1024 pixel area.
+          Level 1: Each tile covers a 2048×2048 pixel area.
+          Level 0: Each tile covers a 4096×4096 pixel area.
+          */
+          mouseTracker : new OpenSeadragon.MouseTracker({
+              element: document.getElementById('openseadragon1')
+          }),
+        gestureSettingsMouse: {
+          flickEnabled: true,
+          clickToZoom: true,
+          dblClickToZoom: false
+        },
+        showRotationControl: true,
+        rotationIncrement: 30,
+        // Enable touch rotation on tactile devices
+        gestureSettingsTouch: {
+            pinchRotate: true
+        },
+        //defaultZoomLevel: 1, // Starts the viewer at a higher zoom level
+        animationTime: 0,
+        springStiffness: 100,
+        zoomPerSecond: 1,
+        zoomPerScroll: 1.5,
+        loadTilesWithAjax: true,
+        //imageLoaderLimit: 0,
+        timeout: 1000000,
+      });
+    
+      // Add Event that called mouseMoveEvent to viewer. 
+      // This will be work when the mouse cursor move on the canvas.
+      viewer.mouseTracker.moveHandler = function(event) {
+        // The canvas-click event gives us a position in web coordinates.
+        var webPoint = event.position;
+
+        // Convert that to viewport coordinates, the lingua franca of OpenSeadragon coordinates.
+        var viewportPoint = viewer.viewport.pointFromPixel(webPoint);
+
+        // Convert from viewport coordinates to image coordinates.
+        var imagePoint = viewer.viewport.viewportToImageCoordinates(viewportPoint);
+
+        // Show the results.
+        //console.log(webPoint.toString(), viewportPoint.toString(), imagePoint.toString());        
+      };
+
+
+      viewer.addHandler('canvas-enter', function(event) {
+        // The canvas-click event gives us a position in web coordinates.
+        var webPoint = event.position;
+
+        // Convert that to viewport coordinates, the lingua franca of OpenSeadragon coordinates.
+        var viewportPoint = viewer.viewport.pointFromPixel(webPoint);
+
+        // Convert from viewport coordinates to image coordinates.
+        var imagePoint = viewer.viewport.viewportToImageCoordinates(viewportPoint);
+
+        // Show the results.
+        //console.log(webPoint.toString(), viewportPoint.toString(), imagePoint.toString());
+      });
+    }
+
+</script>

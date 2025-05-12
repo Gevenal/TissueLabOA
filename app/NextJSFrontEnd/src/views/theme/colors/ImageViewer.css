@@ -1,0 +1,13 @@
+
+.image-viewer-container {
+    display: flex;
+    flex-direction: row;  /* Ensures the sidebar is to the right of the main content */
+    height: 100%;
+    width: 100%;
+    gap: 0px;  /* Adds space between main content and sidebar */
+}
+
+.image-viewer-main {
+    flex-grow: 1;
+    padding: 0px;
+}
